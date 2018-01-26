@@ -16,7 +16,27 @@ use Tunaqui\Utils\Exception\AttributeNotFoundException;
 class ArrayObject implements ArrayAccess
 {
 
+    /**
+     * @var int
+     */
     private $index;
+
+    /**
+     * @var array
+     */
+    private $keys;
+
+    /**
+     * @var int
+     */
+    private $indexItem;
+
+    public function __construct()
+    {
+        $this->index= 0;
+        $this->keys = [];
+        $this->indexItem = -1;
+    }
 
     /**
      * Whether a offset exists
@@ -68,12 +88,10 @@ class ArrayObject implements ArrayAccess
     public function offsetSet($offset, $value)
     {
         if(is_null($offset)) {
-            if(is_null($this->index)) {
-                $this->index = 0;
-            }
             $offset = $this->index;
             $this->index++;
         }
+        $this->indexItem = array_push($this->keys, $offset);
         $this->{$offset} = $value;
     }
 
@@ -91,6 +109,43 @@ class ArrayObject implements ArrayAccess
         if($this->offsetExists($offset)) {
             unset($this->{$offset});
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function all() {
+        $all = array();
+        foreach ($this->keys as $key) {
+            $all[$key] = $this->{$key};
+        }
+        return $all;
+    }
+
+    /**
+     * @return array
+     */
+    public function keys() {
+        return $this->keys;
+    }
+
+    /**
+     * @param mixed $value
+     * @return int
+     */
+    public function push($value) {
+        $this->offsetSet(null, $value);
+        return $this->indexItem;
+    }
+
+    /**
+     * @param string $offset
+     * @param mixed $value
+     * @return int
+     */
+    public function add($offset, $value) {
+        $this->offsetSet($offset, $value);
+        return $this->indexItem;
     }
 
 }

@@ -55,6 +55,14 @@ class JsonResponse implements ArrayAccess
                 array_push($this->data, $data);
             }
         }
+        if(is_object($this->errors)) {
+            $this->errors = Objects::attrToArray($this->errors);
+        }
+        if(is_string($this->errors) || is_numeric($this->errors)) {
+            $err = $this->errors;
+            $this->errors = array();
+            $this->errors[0] = $err;
+        }
         $this->errors = !is_null($errors) ? array_merge($this->errors, $errors) : $this->errors;
     }
 
