@@ -13,8 +13,17 @@ namespace Tunaqui\Utils;
 
 use Tunaqui\Utils\Arrays\ArrayObject;
 
+/**
+ * Class Objects
+ * @package Tunaqui\Utils
+ */
 class Objects
 {
+    /**
+     * Extract attributes object in array.
+     * @param object|array $object
+     * @return array
+     */
     public static function attrToArray($object){
         if(is_array($object) || is_object($object)) {
             $result = [];
@@ -26,6 +35,11 @@ class Objects
         return $object;
     }
 
+    /**
+     * Array attributes to object class ArrayObject.
+     * @param array $attributes
+     * @return ArrayObject
+     */
     public static function fromArray(array $attributes) {
         $object = new ArrayObject();
         foreach ($attributes as $key => $val) {

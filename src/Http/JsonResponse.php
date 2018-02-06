@@ -15,6 +15,10 @@ use Closure;
 use Tunaqui\Utils\Exception\AttributeNotFoundException;
 use Tunaqui\Utils\Objects;
 
+/**
+ * Class JsonResponse
+ * @package Tunaqui\Utils\Http
+ */
 class JsonResponse implements ArrayAccess
 {
     public $success;
@@ -25,11 +29,19 @@ class JsonResponse implements ArrayAccess
     private $index;
     public $valid_model;
 
+    /**
+     * JsonResponse constructor.
+     * @param bool $success
+     * @param string $message
+     * @param int $code
+     * @param mixed $data
+     * @param array $errors
+     */
     public function __construct($success=true, $message='Success!', $code=200, $data=[], $errors=[])
     {
         $this->success = $success;
         $this->message = $message;
-        $this->data = Objects::attrToArray($data);
+        $this->data = $data;
         $this->code = $code;
         $this->errors = $errors;
         $this->index = 0;
@@ -48,9 +60,18 @@ class JsonResponse implements ArrayAccess
         $this->success = $success;
         $this->code = $code;
         $this->message = $message;
+        if(is_null($this->data)) {
+            $this->data = array();
+        } else {
+            if(!is_array($this->data)) {
+                $old = $this->data;
+                $this->data = array();
+                array_push($this->data, $old);
+            }
+        }
         if(!is_null($data)) {
-            if(is_array($data) || is_object($data)) {
-                $this->data = array_merge($this->data, Objects::attrToArray($data));
+            if(is_array($data)) {
+                $this->data = array_merge($this->data, $data);
             } else {
                 array_push($this->data, $data);
             }
@@ -69,7 +90,7 @@ class JsonResponse implements ArrayAccess
     /**
      * Produces a failed response
      * @param string $message
-     * @param array $data
+     * @param mixed $data
      * @param int $code
      */
     public function prepareSuccess($message, $data=[], $code=200) {
