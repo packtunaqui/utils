@@ -47,4 +47,17 @@ class Objects
         }
         return $object;
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param string $content
+     * @return void
+     */
+    public static function fromString(string $content)
+    {
+        $arr = \json_decode($content, JSON_PRETTY_PRINT);
+        $arr = attrToArray($arr);
+        return fromArray($arr);
+    }
 }

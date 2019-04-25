@@ -6,7 +6,7 @@
         "Tunaqui",
         "Utils"
     ],
-    "homepage": "https://github.com/packtunaqui/utils",
+    "homepage": "https://github.com/tunaqui-solutions/utils",
     "license": "MIT",
     "authors": [
         {
@@ -47,5 +47,12 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
-    }
+    },
+    "repositories": [
+        {
+            "type": "composer", 
+            "url": "https://packagist.org"
+       },
+       { "packagist": false }
+    ]
 }
