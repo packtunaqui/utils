@@ -49,15 +49,15 @@ class Objects
     }
 
     /**
-     * Undocumented function
+     * json string to object
      *
      * @param string $content
-     * @return void
+     * @return ArrayObject
      */
-    public static function fromString(string $content)
+    public static function fromString($content)
     {
         $arr = \json_decode($content, JSON_PRETTY_PRINT);
-        $arr = attrToArray($arr);
-        return fromArray($arr);
+        $arr = static::attrToArray($arr);
+        return static::fromArray($arr);
     }
 }
