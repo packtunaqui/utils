@@ -6,6 +6,7 @@
  *
  *  This file Strings.phpp is part of the Utils project.
  *  Created at: 2018/01/11
+ *  Updated at: 2023/04/08
  **/
 
 namespace Tunaqui\Utils;
@@ -13,6 +14,11 @@ namespace Tunaqui\Utils;
 
 class Strings
 {
+    /**
+     * Format a string using wildcards
+     * @param string $string
+     * @param mixed $args
+     */
     public static function placeholder($string, ...$args) {
         $args = array_slice(func_get_args(), 1);
         if(func_num_args()==2) {
@@ -29,6 +35,11 @@ class Strings
         }
         return $string;
     }
+
+    /**
+     * Format friendly strings
+     * @param string $string
+     */
     public static function slug($string) {
         $characters = array(
             "Á" => "A", "Ç" => "c", "É" => "e", "Í" => "i", "Ñ" => "n", "Ó" => "o", "Ú" => "u",
@@ -46,5 +57,20 @@ class Strings
         }
 
         return $string;
+    }
+
+    /**
+     * Generate a random string
+     * @param int $length
+     */
+    public static function random($length = 10)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
     }
 }

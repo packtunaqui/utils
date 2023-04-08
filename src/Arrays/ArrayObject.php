@@ -148,4 +148,11 @@ class ArrayObject implements ArrayAccess
         return $this->indexItem;
     }
 
+    public function optional($offset)
+    {
+        if($this->offsetExists($offset)) {
+            return $this->{$offset};
+        }
+        return null;
+    }
 }
